@@ -23,3 +23,9 @@ Loading Data -> Exploring Data -> Exploratory Data Analysis -> Feature Creation 
 - Set up environment
 - Loaded dataset
 - Investigated dataset
+
+## Day 2 Findings (EDA)
+- No missing values in train/test/stores/holidays/transactions
+- oil.csv file has 43 dcoilwtico missing values - structural missing (market closed during weekends and market holidays) and not random missing
+- All 54 stores are there from the first day (2013-01-01) of the dataset
+- Zero-sales pattern (present in 31% of train records) is NOT random; it is because of the product family not yet launched in the specific store (product families like "BOOKS/BABY CARE" started selling in some stores after few years of dataset)
