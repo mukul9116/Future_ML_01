@@ -29,3 +29,9 @@ Loading Data -> Exploring Data -> Exploratory Data Analysis -> Feature Creation 
 - oil.csv file has 43 dcoilwtico missing values - structural missing (market closed during weekends and market holidays) and not random missing
 - All 54 stores are there from the first day (2013-01-01) of the dataset
 - Zero-sales pattern (present in 31% of train records) is NOT random; it is because of the product family not yet launched in the specific store (product families like "BOOKS/BABY CARE" started selling in some stores after few years of dataset)
+
+## Day 3 Results (Time Series Analysis)
+- Total sales clearly have an upward trend between 2013-2017
+- Seasonality is evident; sales on weekends are higher compared to weekday sales
+- ADF test on sales data for months: p-value = 0.26707 (>0.05), therefore the series is non-stationary
+- Conclusion: trend and seasonality exist, and the trend is non-stationary, so we use SARIMA models instead of ARIMA.
