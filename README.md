@@ -21,7 +21,7 @@ Investigate the dataset, study its structure, clean and analyze the data, create
 ## Approach (Outline)
 Loading Data -> Exploring Data -> Exploratory Data Analysis -> Feature Creation -> Modeling -> Evaluation -> Visualization
 
-## Progress (Day 1 of 30)
+## Progress (Day 1 of 10)
 - Created project repository
 - Downloaded dataset from Kaggle
 - Set up environment
