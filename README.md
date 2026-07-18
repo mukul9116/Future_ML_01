@@ -46,3 +46,12 @@ Loading Data -> Exploring Data -> Exploratory Data Analysis -> Feature Creation 
 - Created date features: month, year, and is_weekend
 - Created is_launched / days_since_launched, is_nan for never launched product-store combinations will require a filling of missing values (probably 0) prior to modeling.
 - lesson learned: Rerunning notebook cells out of sequence on existing data causes silent duplicate column problems - always restart from scratch before final run
+
+## Day 5 Results (Train/Test split and Baselines)
+- Created chronological train/validation split (last 3 months as validation set) - absolutely necessary to prevent leakage, since shuffling will allow the model to see the future
+- Verified that test.csv (Kaggle's file) does not have the sales column - cannot use this data for evaluation, and will split the train.csv file instead
+- Cannot use MAPE because of the ~31% zero-sales records that cause division by zero
+- Simple baseline (yesterday=today): MAE = 128.1, RMSE = 469.3
+- Moving average baseline (rolling_mean_7): MAE = 109.0, RMSE = 395.3 - outperforms simple baseline in both cases
+- Significant difference between RMSE and MAE in simple baseline indicates occasional large errors (probably caused by weekday-to-weekend transition), not small consistent errors
+- These are the baselines that we need to build the model.
