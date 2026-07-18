@@ -55,3 +55,10 @@ Loading Data -> Exploring Data -> Exploratory Data Analysis -> Feature Creation 
 - Moving average baseline (rolling_mean_7): MAE = 109.0, RMSE = 395.3 - outperforms simple baseline in both cases
 - Significant difference between RMSE and MAE in simple baseline indicates occasional large errors (probably caused by weekday-to-weekend transition), not small consistent errors
 - These are the baselines that we need to build the model.
+
+## Day 6 Results (Choosing best and comparing Models for Prediction)
+- Created dummy variables for family using pd.get_dummies (with drop_first=True); forced alignment of test set columns by using reindex to solve the problem with train/test column mismatch
+- Linear Regression: test MAE = 94.76, RMSE = 306.23, R2 = 0.9469; gave ~1M non-sensical negative predictions on test set (min = -35.9)
+- Random Forest (n_estimators = 50, max_depth = 10): test MAE = 74.99, RMSE = 273.90, R2 = 0.9575; made no negative predictions, tree-based models cannot extrapolate outside range of values observed
+- Both models outperform Day 5 results (baseline naive MAE = 128.1, baseline moving avg MAE = 109.0)
+- Random Forest is our best model for now.
