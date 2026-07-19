@@ -70,3 +70,36 @@ Loading Data -> Exploring Data -> Exploratory Data Analysis -> Feature Creation 
 - SARIMA outperforms RF on this specific high-volume, strongly-seasonal series
 - Key insight: RF's earlier "better" overall numbers were an average across 1,782 combos of very different scale/sparsity - not a fair comparison to a single-series SARIMA model
 - Practical implication: model choice should depend on series characteristics - SARIMA/per-series models for high-volume consistent sellers, global ML models for the sparse long tail
+
+## Model Selection Reasoning: Random Forest and SARIMA
+
+In this project, two distinct approaches were tested:
+
+- **Random Forest** – one global model trained for all 1,782 store-family
+  combinations simultaneously. Easy to train/maintain on a large scale, yet can
+  only capture seasonal trends indirectly (with features such as is_weekend),
+  and average error metrics on a highly heterogeneous dataset of high-volume
+  and low-volume items.
+
+- **SARIMA** – fitted on each individual series explicitly modeling the
+  trend and seasonality. In one specific example of a high-volume, consistently
+  selling series (Store 1/BEVERAGES), SARIMA clearly beat Random Forest
+  (MAE 232.73 vs. 361.51) on the same series. However, SARIMA cannot be used
+  directly on this dataset of 1,782 combinations without fitting a new model
+  for each series, which requires substantially more effort than one global
+  model.
+
+**Conclusion:** there is no "best" model here – it depends on the series.
+For the purposes of this project, Random Forest was chosen as the global model,
+(adding robustness with sklearn Pipeline and OneHotEncoder,
+cross-validation with TimeSeriesSplit). In the real-world scenario,
+a hybrid solution is preferred: dedicated per-series models (SARIMA or alike)
+for flagship high-volume items when the additional accuracy is worth it,
+and global
+
+## Day 8 Results (Analysis & Tuning)
+- Switched from pd.get_dummies & manual reindexing to an appropriate sklearn Pipeline (ColumnTransformer + OneHotEncoder(handle_unknown='ignore'))
+- Updated pipeline: test MAE 74.96, RMSE 273.46, R2 0.9577 – basically the same as Day 6 manual approach, which proves that the change has improved robustness without reducing predictability
+- Performed TimeSeriesSplit (5 folds) on a 200K sample: mean MAE 68.03, standard deviation 11.38
+- The MAE increased in later folds – due to the overall increase in sales, rather than deterioration of the model's ability
+- Model selection: Random Forest through Pipeline, due to robustness and decent cross-validation results
