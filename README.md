@@ -62,3 +62,11 @@ Loading Data -> Exploring Data -> Exploratory Data Analysis -> Feature Creation 
 - Random Forest (n_estimators = 50, max_depth = 10): test MAE = 74.99, RMSE = 273.90, R2 = 0.9575; made no negative predictions, tree-based models cannot extrapolate outside range of values observed
 - Both models outperform Day 5 results (baseline naive MAE = 128.1, baseline moving avg MAE = 109.0)
 - Random Forest is our best model for now.
+
+## Day 7 Findings (SARIMA)
+- Fit SARIMA order(1,1,1)xseasonal_order(1,1,1,7) on Store 1/BEVERAGES (chosen for low zero-rate, high volume - fair test for seasonal modeling)
+- SARIMA test: MAE 232.73, RMSE 313.79, R2 0.6655
+- Re-evaluated Random Forest on the SAME series alone (not all combos): MAE 361.51, RMSE 485.03, R2 0.1932
+- SARIMA outperforms RF on this specific high-volume, strongly-seasonal series
+- Key insight: RF's earlier "better" overall numbers were an average across 1,782 combos of very different scale/sparsity - not a fair comparison to a single-series SARIMA model
+- Practical implication: model choice should depend on series characteristics - SARIMA/per-series models for high-volume consistent sellers, global ML models for the sparse long tail
