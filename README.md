@@ -112,3 +112,25 @@ and global
 - High variance from one day to another: Standard deviation of daily errors = 87000, Min daily error = -269961, Max daily error = 223709
 - Business implication: The model is more accurate when used for weekly/monthly planning trends than for daily inventory decisions since the daily errors may differ a lot each way
 - Important business observation (quantified): Sales volume during weekends is 39.3% higher than sales during weekdays (day3 observation)
+
+## Limitations & Future Work
+
+- **SARIMA model testing on just one series.** On Day 7, while SARIMA was
+  able to outperform Random Forest on the Series Store 1/BEVERAGES (high
+  selling volume, stable series), this hasn't been implemented across
+  all 1,782 store-family combinations in production. There must be an
+  automatic way to create (and update) the models for valuable products,
+  but we've just shown it works with one particular example series.
+
+- **Random Forest's hyperparameters were not optimized using GridSearchCV/RandomizedSearchCV.** Properly tuning the hyperparameters involves  fitting the model multiple times (usually dozens of times, depending on parameters per fold of cross-validation). Considering how much time it takes to fit one such model with this dataset (~2.8M rows) at 20-30+ min in this Colab notebook setting, a complete search was impossible in 5 hours per day timeframe. Parameters were set to n_estimators = 50, max_depth = 10, which are realistic choices for defaults, not for maximum accuracy.
+
+- **High variation of day-to-day predictions despite unbiasedness of
+  errors in total** (Day 9: mean error ~1023, but standard deviation ~87K).
+  The model can be more useful for long-term planning (weekly/monthly) than
+  for making day-to-day decisions. This problem has been identified, not
+  fixed.
+
+- **There was an analysis of external datasets (oil.csv, holidays_events.csv,
+  transactions.csv) on Day 2-3 but no usage of them as predictors**. Some
+  data (like impact of oil prices on economy and exact dates of some
+  holidays)
