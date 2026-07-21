@@ -103,3 +103,12 @@ and global
 - Performed TimeSeriesSplit (5 folds) on a 200K sample: mean MAE 68.03, standard deviation 11.38
 - The MAE increased in later folds – due to the overall increase in sales, rather than deterioration of the model's ability
 - Model selection: Random Forest through Pipeline, due to robustness and decent cross-validation results
+
+## Day 9 Observations (Visual Representation and Business Insight)
+
+- Constructed graph representing actual versus predicted sales per day (past 90 days) -
+  Predicted sales line mimics actual weekly seasonality (peaks during weekends, dips during weekdays)
+- Lack of clear systematic bias: Mean daily error = 1023, which is a small number compared to overall sales scale (more than hundreds of thousands)
+- High variance from one day to another: Standard deviation of daily errors = 87000, Min daily error = -269961, Max daily error = 223709
+- Business implication: The model is more accurate when used for weekly/monthly planning trends than for daily inventory decisions since the daily errors may differ a lot each way
+- Important business observation (quantified): Sales volume during weekends is 39.3% higher than sales during weekdays (day3 observation)
